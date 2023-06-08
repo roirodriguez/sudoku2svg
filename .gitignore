@@ -1,0 +1,4 @@
+# dev ignores
+.vscode/
+sudoku2svg.egg-info/
+__pycache__/

@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='ASCII'?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" viewBox="0 0 500 500" style="width: {{size}}px;" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <style type="text/css"><![CDATA[
+            {{ cssCode }}
+        ]]></style>
+    </defs>
+    <rect class="grid-bg" width="100%" height="100%"></rect>
+    <!-- Grid -->
+    <g id="sudoku-grid" class="sudoku-grid">
+        <!-- Sudoku cells -->
+        <g id="sudoku-grid-cells">
+        {% for cell in sudoku.cells %}
+            <g transform="translate({{ cell.svg_position.x }}, {{ cell.svg_position.y }})" class="cell-bg">
+                <!-- Cell background-->
+                <rect class="color-code-{{ cell.bgcolor }}" x="0" y="0" width="100" height="100"></rect>
+                <!-- Cell corner marks -->
+                <g class="outer-pencil">
+                {% for mark in cell.corner_marks %}
+                    <text x="{{ mark.x }}" y="{{ mark.y }}" font-size="26" text-anchor="middle">{{ mark.value }}</text>
+                {% endfor %}
+                </g>
+                <!-- Cell central marks -->
+                <text class="inner-pencil" x="50" y="58" font-size="26" text-anchor="middle">{{ cell.center_marks|join('') }}</text>
+                <!-- Cell central digit -->
+                <text class="digit {{ 'given' if cell.isgiven else '' }}" x="50" y="75" font-size="72" text-anchor="middle">{{ cell.value if cell.value else '' }}</text>
+            </g>
+        {% endfor %}                
+        </g>
+        <!-- Grid lines -->
+        <g id="sudoku-grid-lines">
+            <line class="line" x1="50" y1="150" x2="450" y2="150"></line>
+            <line class="line" x1="50" y1="350" x2="450" y2="350"></line>
+            <line class="line" x1="150" y1="50" x2="150" y2="450"></line>
+            <line class="line" x1="350" y1="50" x2="350" y2="450"></line>
+            <line class="line-bold" x1="50" y1="250" x2="450" y2="250"></line>
+            <line class="line-bold" x1="250" y1="50" x2="250" y2="450"></line>
+            <rect class="line-bold" x="50" y="50" width="400" height="400" fill="transparent"></rect>
+        </g>               
+    </g>
+    </svg>
