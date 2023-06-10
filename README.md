@@ -16,7 +16,11 @@ $ python setup.py install
 
 ## Usage
 
-Example usage in Jupyter Notebook: [Sudoku_4x4_svg.ipynb](doc/Sudoku_4x4_svg.ipynb)
+Example usage in Jupyter Notebook: [usage_example.ipynb](doc/usage_example.ipynb)
+
+Sample output:
+
+![Sample output](doc/sample_output.png)
 
 ## TODO
 
