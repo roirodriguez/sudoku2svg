@@ -18,14 +18,19 @@ $ python setup.py install
 
 Example usage in Jupyter Notebook: [usage_example.ipynb](doc/usage_example.ipynb)
 
-Sample output:
+Didn't manage to get github show inline svg in that jupyter notebook, so here's a sample output:
 
 ![Sample output](doc/sample_output.png)
 
 ## TODO
 
-- Fill this TODO list ;-)
+- pylint this
+- add support for testing
+- cleanup css
+- migrate to pypa?
+- allow SudokuGrid to work with friendly coordinates (row, col) just as ViewableSudokuGrid does.
+- input validation in corner / center marks
 
 ## Licence
 
-See [LICENCE](LICENCE) file.
+MIT. See [LICENCE](LICENCE) file.
