@@ -1,14 +1,57 @@
 import re
 from typing import List
 
+
+_VALID_DIMENSIONS = [2, 3]
+
+
+def _sudoku_size(dimension:int=3):
+    if not dimension:
+        raise ValueError
+    return dimension * dimension * dimension * dimension
+
+
+def _sudoku_max_digit(dimension:int=3):
+    if not dimension:
+        raise ValueError
+    return dimension * dimension
+
+def _sudoku_size_dim(size:int=81):
+    valid = { _sudoku_size(v): v for v in _VALID_DIMENSIONS }
+    if not size in valid:
+        raise ValueError
+    return valid[size]
+
+
+class SudokuGrid:
+    def __init__(self, dimension:int=3):
+        if not dimension in _VALID_DIMENSIONS:
+            raise ValueError
+        self._cells = []
+        self._dimension = dimension
+
+    @property
+    def cells(self):
+        return self._cells
+    
+    @property
+    def dimension(self):
+        return self._dimension
+    
+    @property
+    def max_digit(self):
+        return _sudoku_max_digit(self.dimension)
+    
+
 class SudokuCell:
-    def __init__(self, position: int, value: int=None, isgiven: bool=False, 
+    def __init__(self, sudoku: SudokuGrid, position: int, value: int=None, isgiven: bool=False, 
                  corner_marks:List[int] = [], 
                  center_marks:List[int] =[], 
                  bgcolor=1):
-        if position and not 0 <= position < 16:
+        self._max_digit = _sudoku_max_digit(sudoku.dimension)
+        if position and not 0 <= position < _sudoku_size(sudoku.dimension):
             raise ValueError    
-        if value and not 0 <= value < 16:
+        if value and not 0 < value <= self._max_digit:
             raise ValueError
         self._position = position
         self._corner_marks = corner_marks
@@ -46,7 +89,7 @@ class SudokuCell:
     
     @value.setter
     def value(self, value: int):
-        if value > 4:
+        if value > self._max_digit:
             raise ValueError
         self._value = value
 
@@ -61,36 +104,30 @@ class SudokuCell:
     @bgcolor.setter
     def bgcolor(self, color_code: int):
         self._bgcolor = color_code
-    
-
-class SudokuGrid:
-    def __init__(self):
-        self._cells = []
-
-    @property
-    def cells(self):
-        return self._cells
 
 
 class SudokuBuilder:
     @staticmethod
     def fromString(puzzleStr: str):
-        sudoku = SudokuGrid()
-        valid_regex = re.compile("^[0-4]{16,16}$")
+        size = len(puzzleStr)
+        dim = _sudoku_size_dim(size)
+        max_digit = _sudoku_max_digit(dim)
+        sudoku = SudokuGrid(dim)
+        valid_regex = re.compile(f"^[0-{max_digit}]{{{size}}}$")
         if valid_regex.match(puzzleStr):
-            for i in range(16):
+            for i in range(size):
                 value = int(puzzleStr[i])
                 if value == 0:
-                    cell = SudokuCell(i)
+                    cell = SudokuCell(sudoku, i)
                 else:
-                    cell = SudokuCell(i, value=value, isgiven=True)
+                    cell = SudokuCell(sudoku, i, value=value, isgiven=True)
                 sudoku.cells.append(cell)
         return sudoku
     
     @staticmethod
-    def emptyGrid():
-        sudoku = SudokuGrid()
-        for i in range(16):
-            cell = SudokuCell(i)
+    def emptyGrid(dimension:int=3):
+        sudoku = SudokuGrid(dimension)
+        for i in range(_sudoku_size(dimension)):
+            cell = SudokuCell(sudoku, i)
             sudoku.cells.append(cell)
         return sudoku

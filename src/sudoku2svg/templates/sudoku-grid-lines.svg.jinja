@@ -1,0 +1,33 @@
+{% for i in range(1, sudoku.max_digit+1) %}
+{% if not i%sudoku.dimension==0 %}
+<line 
+    class="line" 
+    x1="{{ sudoku.svg_grid_to_viewport(i) }}" 
+    x2="{{ sudoku.svg_grid_to_viewport(i) }}"
+    y1="50" 
+    y2="{{ 50 + sudoku.svg_grid_size }}"></line>
+<line 
+    class="line" 
+    y1="{{ sudoku.svg_grid_to_viewport(i) }}" 
+    y2="{{ sudoku.svg_grid_to_viewport(i) }}"
+    x1="50" 
+    x2="{{ 50 + sudoku.svg_grid_size }}"></line>    
+{% endif %}
+{% endfor %}
+{% for i in range(1, sudoku.max_digit+1) %}
+{% if i%sudoku.dimension==0 %}
+<line 
+    class="line-bold" 
+    x1="{{ sudoku.svg_grid_to_viewport(i) }}" 
+    x2="{{ sudoku.svg_grid_to_viewport(i) }}"
+    y1="50" 
+    y2="{{ 50 + sudoku.svg_grid_size }}"></line>
+<line 
+    class="line-bold" 
+    y1="{{ sudoku.svg_grid_to_viewport(i) }}" 
+    y2="{{ sudoku.svg_grid_to_viewport(i) }}"
+    x1="50" 
+    x2="{{ 50 + sudoku.svg_grid_size }}"></line>    
+{% endif %}
+{% endfor %}
+<rect class="line-bold" x="50" y="50" width="{{sudoku.svg_grid_size}}" height="{{sudoku.svg_grid_size}}" fill="transparent"></rect>

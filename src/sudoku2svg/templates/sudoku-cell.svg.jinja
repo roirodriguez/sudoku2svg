@@ -1,0 +1,14 @@
+<g transform="translate({{ cell.svg_position.x }}, {{ cell.svg_position.y }})" class="cell-bg">
+    <!-- Cell background-->
+    <rect class="color-code-{{ cell.bgcolor }}" x="0" y="0" width="100" height="100"></rect>
+    <!-- Cell corner marks -->
+    <g class="outer-pencil">
+    {% for mark in cell.corner_marks %}
+        <text x="{{ mark.x }}" y="{{ mark.y }}" font-size="26" text-anchor="middle">{{ mark.value }}</text>
+    {% endfor %}
+    </g>
+    <!-- Cell central marks -->
+    <text class="inner-pencil" x="50" y="58" font-size="26" text-anchor="middle">{{ cell.center_marks|join('') }}</text>
+    <!-- Cell central digit -->
+    <text class="digit {{ 'given' if cell.isgiven else '' }}" x="50" y="75" font-size="72" text-anchor="middle">{{ cell.value if cell.value else '' }}</text>
+</g>
