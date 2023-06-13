@@ -2,3 +2,4 @@
 .vscode/
 sudoku2svg.egg-info/
 __pycache__/
+dist/
